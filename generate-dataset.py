@@ -19,7 +19,8 @@ documents = SimpleDirectoryReader(
                                 input_dir='/home/external/TayshaFinetuning/LLM-DATA/biotech-data'
                                 ).load_data()
 nodes = service_context.node_parser.get_nodes_from_documents(documents)
-print(f"\n{nodes} nodes loaded\n")
+len_nodes = len(nodes)
+print(f"\n{len_nodes} nodes loaded\n")
 
 QA_PROMPT = PromptTemplate(
                         "Context information is below.\n"
