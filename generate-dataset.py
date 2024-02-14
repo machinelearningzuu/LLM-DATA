@@ -87,33 +87,34 @@ def generate_qa_pairs(
             
     qa_pairs = []
     for idx, node in enumerate(nodes):
-        print(f"processing node {idx}/{len(nodes)}")
-        context_str = node.get_content(metadata_mode="all")
-        fmt_messages = question_gen_template.format_messages(
-                                                            num_questions_per_chunk=num_questions_per_chunk,
-                                                            context_str=context_str,
-                                                            )
-        chat_response = llm.chat(fmt_messages)
-        raw_output = chat_response.message.content
-        result_list = str(raw_output).strip().split("\n")
-        cleaned_questions = [
-            re.sub(r"^\d+[\).\s]", "", question).strip()
-            for question in result_list
-        ]
-        answers = generate_answers_for_questions(
-                                                cleaned_questions, 
-                                                context_str, 
-                                                llm
-                                            )
-        for q, a in zip(cleaned_questions, answers):
-            qa_pairs.append({
-                            "question": q,
-                            "answer": a,
-                            "context": context_str
-                            })
-            
-        with open(f'generated/biotech/qa_{idx}.json', 'w') as f:
-            json.dump(qa_pairs, f)
+        if not os.path.exists(f'generated/biotech/qa_{idx}.json'):
+            print(f"processing node {idx}/{len(nodes)}")
+            context_str = node.get_content(metadata_mode="all")
+            fmt_messages = question_gen_template.format_messages(
+                                                                num_questions_per_chunk=num_questions_per_chunk,
+                                                                context_str=context_str,
+                                                                )
+            chat_response = llm.chat(fmt_messages)
+            raw_output = chat_response.message.content
+            result_list = str(raw_output).strip().split("\n")
+            cleaned_questions = [
+                re.sub(r"^\d+[\).\s]", "", question).strip()
+                for question in result_list
+            ]
+            answers = generate_answers_for_questions(
+                                                    cleaned_questions, 
+                                                    context_str, 
+                                                    llm
+                                                )
+            for q, a in zip(cleaned_questions, answers):
+                qa_pairs.append({
+                                "question": q,
+                                "answer": a,
+                                "context": context_str
+                                })
+                
+            with open(f'generated/biotech/qa_{idx}.json', 'w') as f:
+                json.dump(qa_pairs, f)
 
 generate_qa_pairs(
                 service_context.llm, nodes, 
