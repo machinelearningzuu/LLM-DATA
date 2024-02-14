@@ -124,5 +124,5 @@ def generate_qa_pairs(
 
 generate_qa_pairs(
                 service_context.llm, nodes, 
-                num_questions_per_chunk=2
+                num_questions_per_chunk=5
                 )
