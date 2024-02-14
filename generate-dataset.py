@@ -16,7 +16,7 @@ print(f"Use {gpt_flag} as LLM")
 print(f"Use E.LLM from {embedding_flag}")
 
 documents = SimpleDirectoryReader(
-                                input_dir='/home/external/TayshaFinetuning/LLM-DATA/biotech-docs'
+                                input_dir='/home/external/TayshaFinetuning/LLM-DATA/biotech-data'
                                 ).load_data()
 nodes = service_context.node_parser.get_nodes_from_documents(documents)
 print(f"\n{nodes} nodes loaded\n")
