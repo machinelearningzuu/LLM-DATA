@@ -32,19 +32,19 @@ else:
                                         )
 
 chat_llm = OpenAI(
-                api_key=credentials['OPENAI_API_KEY'],
+                api_key=credentials[f'{llm_prefix}_OPENAI_API_KEY'],
                 model=llm_model,
                 temperature=0.3
                 )
 
 completion_llm = OpenAI(
-                        api_key=credentials['OPENAI_API_KEY'],
+                        api_key=credentials[f'{llm_prefix}_OPENAI_API_KEY'],
                         model=llm_model,
                         temperature=0
                         )
 
 audio_client = openai.OpenAI(
-                    api_key=credentials['OPENAI_API_KEY']
+                    api_key=credentials[f'{llm_prefix}_OPENAI_API_KEY']
                 )
 
 node_parser = SentenceSplitter(chunk_size=1024)
@@ -54,5 +54,4 @@ service_context = ServiceContext.from_defaults(
                                             node_parser=node_parser,
                                             llm=chat_llm
                                             )
-
 set_global_service_context(service_context)
