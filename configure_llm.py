@@ -47,7 +47,7 @@ audio_client = openai.OpenAI(
                     api_key=credentials[f'{llm_prefix}_OPENAI_API_KEY']
                 )
 
-node_parser = SentenceSplitter(chunk_size=1024)
+node_parser = SentenceSplitter(chunk_size=2048)
 
 service_context = ServiceContext.from_defaults(
                                             embed_model=embedding_llm,
