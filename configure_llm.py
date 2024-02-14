@@ -5,6 +5,7 @@ from llama_index.embeddings import (
                                     HuggingFaceEmbedding, 
                                     OpenAIEmbedding
                                     )
+from llama_index.node_parser import SentenceSplitter
 from llama_index import (
                         SimpleDirectoryReader,
                         set_global_service_context,
