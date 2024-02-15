@@ -16,7 +16,7 @@ print(f"Use {gpt_flag} as LLM")
 print(f"Use E.LLM from {embedding_flag}")
 
 def remove_error_qna_pairs(data_dir = "generated/biotech"):
-    print("====== Validate Q/A Data Generation ======="
+    print("====== Validate Q/A Data Generation =======")
     for file in os.listdir(data_dir):
         with open(os.path.join(data_dir, file), "r") as f:
             try:
