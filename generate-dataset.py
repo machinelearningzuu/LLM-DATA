@@ -58,14 +58,18 @@ question_gen_template = ChatPromptTemplate(
                     )
 
 def remove_error_qna_pairs(data_dir = "generated/biotech"):
+    print("====== Validate Q/A Data Generation ======="
     for file in os.listdir(data_dir):
         with open(os.path.join(data_dir, file), "r") as f:
             try:
                 qa_pairs = json.load(f)
                 if len(qa_pairs) == 0: # check if the file is empty
                     os.remove(os.path.join(data_dir, file))
+                    print(f"Error reading file {file}, file removed")
             except:
                 os.remove(os.path.join(data_dir, file))
+                print(f"Error reading file {file}, file removed")
+    print("===========================================")
               
 def generate_answers_for_questions(
                                     questions: List[str], 
