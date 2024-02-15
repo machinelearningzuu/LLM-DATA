@@ -99,10 +99,10 @@ def generate_qa_pairs(
     #     if len(os.listdir('generated/biotech')) > 0:
     #         for file in os.listdir('generated/biotech'):
     #             os.remove(os.path.join('generated/biotech', file))
-            
-    qa_pairs = []
+          
     for idx, node in enumerate(nodes):
         if not os.path.exists(f'generated/biotech/qa_{idx}.json'):
+            qa_pairs = []
             print(f"processing node {idx}/{len(nodes)}")
             context_str = node.get_content(metadata_mode="all")
             fmt_messages = question_gen_template.format_messages(
