@@ -57,6 +57,16 @@ question_gen_template = ChatPromptTemplate(
                                                         ]
                     )
 
+def remove_error_qna_pairs(data_dir = "generated/biotech"):
+    for file in os.listdir(data_dir):
+        with open(os.path.join(data_dir, file), "r") as f:
+            try:
+                qa_pairs = json.load(f)
+                if len(qa_pairs) == 0: # check if the file is empty
+                    os.remove(os.path.join(data_dir, file))
+            except:
+                os.remove(os.path.join(data_dir, file))
+              
 def generate_answers_for_questions(
                                     questions: List[str], 
                                     context: str, 
@@ -122,6 +132,7 @@ def generate_qa_pairs(
                 print("==================================================")
                 print("\n")
 
+remove_error_qna_pairs()
 generate_qa_pairs(
                 service_context.llm, nodes, 
                 num_questions_per_chunk=2
