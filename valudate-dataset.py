@@ -8,5 +8,5 @@ for file in os.listdir(data_dir):
             # check if the file is empty
             if len(qa_pairs) == 0:
                 print(f"file {file} is empty")
-        else:
+        except:
             print(f"file {file} is empty")
