@@ -15,6 +15,21 @@ print(f"Use API from {llm_prefix}")
 print(f"Use {gpt_flag} as LLM")
 print(f"Use E.LLM from {embedding_flag}")
 
+def remove_error_qna_pairs(data_dir = "generated/biotech"):
+    print("====== Validate Q/A Data Generation ======="
+    for file in os.listdir(data_dir):
+        with open(os.path.join(data_dir, file), "r") as f:
+            try:
+                qa_pairs = json.load(f)
+                if len(qa_pairs) == 0: # check if the file is empty
+                    os.remove(os.path.join(data_dir, file))
+                    print(f"Error reading file {file}, file removed")
+            except:
+                os.remove(os.path.join(data_dir, file))
+                print(f"Error reading file {file}, file removed")
+    print("===========================================")
+remove_error_qna_pairs()
+
 documents = SimpleDirectoryReader(
                                 input_dir='/home/external/TayshaFinetuning/LLM-DATA/biotech-data'
                                 ).load_data()
@@ -57,20 +72,6 @@ question_gen_template = ChatPromptTemplate(
                                                         ]
                     )
 
-def remove_error_qna_pairs(data_dir = "generated/biotech"):
-    print("====== Validate Q/A Data Generation ======="
-    for file in os.listdir(data_dir):
-        with open(os.path.join(data_dir, file), "r") as f:
-            try:
-                qa_pairs = json.load(f)
-                if len(qa_pairs) == 0: # check if the file is empty
-                    os.remove(os.path.join(data_dir, file))
-                    print(f"Error reading file {file}, file removed")
-            except:
-                os.remove(os.path.join(data_dir, file))
-                print(f"Error reading file {file}, file removed")
-    print("===========================================")
-              
 def generate_answers_for_questions(
                                     questions: List[str], 
                                     context: str, 
@@ -136,7 +137,6 @@ def generate_qa_pairs(
                 print("==================================================")
                 print("\n")
 
-remove_error_qna_pairs()
 generate_qa_pairs(
                 service_context.llm, nodes, 
                 num_questions_per_chunk=2
